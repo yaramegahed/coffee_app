@@ -6,6 +6,8 @@ class AppColors {
   static const  brownButtonColor = Color(0xFF4B2C20);
   static const  beigeButtonColor = Color(0xFFD5BBA2);
   static const  beigeTextColor = Color(0xFFF6F2ED);
+  static const  blueColor = Color(0xFF0088FF);
+  static const  greyColor = Color(0xFF999999);
   static const  shadowColor = Color(0x25000000);
 
 }

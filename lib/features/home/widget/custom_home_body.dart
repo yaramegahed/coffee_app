@@ -1,6 +1,4 @@
-import 'package:coffee_app/core/constants/app_colors.dart';
 import 'package:flutter/material.dart';
-
 import 'custom_home_order_container.dart';
 import 'custom_menu_categorized_row.dart';
 import 'custom_menu_items.dart';
