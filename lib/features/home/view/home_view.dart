@@ -1,7 +1,7 @@
 import 'package:coffee_app/core/constants/app_colors.dart';
 import 'package:coffee_app/features/home/widget/custom_home_body.dart';
 import 'package:flutter/material.dart';
-import '../widget/custom_app_bar.dart';
+import '../../../core/widget/custom_app_bar.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});

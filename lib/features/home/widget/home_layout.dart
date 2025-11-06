@@ -1,4 +1,5 @@
 import 'package:coffee_app/features/home/view/home_view.dart';
+import 'package:coffee_app/features/order/view/order_view.dart';
 import 'package:flutter/material.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../scan/view/scan_view.dart';
@@ -19,6 +20,7 @@ class _HomeLayoutState extends State<HomeLayout> {
   final List<Widget> _pages = [
     HomeView(),
     ScanView(),
+    OrderView(),
   ];
 
   @override

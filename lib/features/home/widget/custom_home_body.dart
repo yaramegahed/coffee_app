@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'custom_home_order_container.dart';
-import 'custom_menu_categorized_row.dart';
-import 'custom_menu_items.dart';
+import '../../../core/widget/custom_menu_categorized_row.dart';
+import '../../../core/widget/custom_menu_items.dart';
 
 class CustomHomeBody extends StatelessWidget {
   const CustomHomeBody({
