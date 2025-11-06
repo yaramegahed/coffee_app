@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/widget/skip_text.dart';
 import 'custom_register_container.dart';
 
 class RegisterBody extends StatelessWidget {
@@ -11,21 +12,7 @@ class RegisterBody extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(
-            height: 30,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 24.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(
-                  "Skip",
-                  style: TextStyle(fontSize: 18),
-                ),
-              ],
-            ),
-          ),
+          SkipText(),
           Image.asset(
             "assets/images/CoffeeShot logo.png",
             height: 90,
@@ -39,5 +26,6 @@ class RegisterBody extends StatelessWidget {
     );
   }
 }
+
 
 
