@@ -8,6 +8,7 @@ class AppColors {
   static const  beigeTextColor = Color(0xFFF6F2ED);
   static const  blueColor = Color(0xFF0088FF);
   static const  greyColor = Color(0xFF999999);
+  static const  registerBGColor = Color(0xFFF8EBD8);
   static const  shadowColor = Color(0x25000000);
 
 }

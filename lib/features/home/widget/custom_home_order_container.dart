@@ -1,3 +1,5 @@
+import 'package:coffee_app/features/register/view/register_view.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../core/constants/app_colors.dart';
 import 'custom_button.dart';
@@ -34,8 +36,13 @@ class CustomHomeOrderContainer extends StatelessWidget {
                 children: [
                   CustomButton(
                     title: 'JOIN NOW',
-                    buttonColor: AppColors.brownButtonColor,
-                    textColor: AppColors.beigeTextColor,
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          CupertinoModalPopupRoute(
+                            builder: (context) => RegisterView(),
+                          ));
+                    },
                   ),
                   SizedBox(
                     width: 20,
@@ -44,6 +51,7 @@ class CustomHomeOrderContainer extends StatelessWidget {
                     title: 'GUEST ORDER',
                     buttonColor: AppColors.beigeButtonColor,
                     textColor: AppColors.brownButtonColor,
+                    onTap: () {},
                   ),
                 ],
               ),
@@ -55,5 +63,3 @@ class CustomHomeOrderContainer extends StatelessWidget {
     );
   }
 }
-
-
