@@ -1,23 +1,23 @@
-import 'package:coffee_app/core/validator/app_validators.dart';
-import 'package:coffee_app/features/login/view/login_view.dart';
-import 'package:coffee_app/features/register/widget/text_form_field_title.dart';
+import 'package:coffee_app/features/register/view/register_view.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/constants/app_colors.dart';
+import '../../../core/validator/app_validators.dart';
 import '../../home/widget/custom_button.dart';
-import 'custom_text_field.dart';
+import '../../register/widget/custom_text_field.dart';
+import '../../register/widget/text_form_field_title.dart';
 
-class CustomRegisterContainerChild extends StatefulWidget {
-  const CustomRegisterContainerChild({
-    super.key,
-  });
+class CustomLoginContainerChild extends StatefulWidget {
+  const CustomLoginContainerChild({super.key});
 
   @override
-  State<CustomRegisterContainerChild> createState() => _CustomRegisterContainerChildState();
+  State<CustomLoginContainerChild> createState() =>
+      _CustomLoginContainerChildState();
 }
 
-class _CustomRegisterContainerChildState extends State<CustomRegisterContainerChild> {
+class _CustomLoginContainerChildState extends State<CustomLoginContainerChild> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -25,36 +25,29 @@ class _CustomRegisterContainerChildState extends State<CustomRegisterContainerCh
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "Sign Up",
+          const Text(
+            "Sign in",
             style: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
                 fontFamily: "Poppins",
                 color: AppColors.brownButtonColor),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
-          Text(
-            "We are so excited you’re ready to become apart of our coffee network! don’t forget  check out your perks!",
+          const Text(
+            "It’s coffee time! Login and lets get all the coffee in the world! Or at least iced coffee. ",
             style: TextStyle(fontSize: 16, color: AppColors.brownButtonColor),
           ),
-          TextFormFieldTitle(
-            title: "Username",
-          ),
-          CustomFormTextField(
-            validator: (value) => AppValidators.userName(value),
-            hintText: 'Enter username',
-          ),
-          TextFormFieldTitle(
+          const TextFormFieldTitle(
             title: "Email or phone number",
           ),
           CustomFormTextField(
             validator: (value) => AppValidators.emailOrPhone(value),
             hintText: 'Type your email or phone number',
           ),
-          TextFormFieldTitle(
+          const TextFormFieldTitle(
             title: "Password",
           ),
           CustomFormTextField(
@@ -62,32 +55,49 @@ class _CustomRegisterContainerChildState extends State<CustomRegisterContainerCh
             isPassword: true,
             hintText: 'Type your password',
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           CustomButton(
             hasShadow: true,
-            title: "REGISTER",
+            title: "LOGIN",
             onTap: () {},
             width: double.infinity,
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10.0),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    "Forgot password?",
+                    style: TextStyle(color: AppColors.freshMintColor),
+                  )),
+              Text(
+                "Reset",
+                style: TextStyle(
+                    color: AppColors.brownButtonColor,
+                    fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 10.0),
             child: Center(
               child: Text(
-                "Already have an account?",
+                "Don’t have an account?",
                 style: TextStyle(color: Colors.grey),
               ),
             ),
           ),
           CustomButton(
             hasShadow: true,
-            title: "SIGN IN",
+            title: "CREATE NEW ACCOUNT",
             onTap: () {
-              Navigator.push(
+              Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => LoginView(),
+                    builder: (context) => RegisterView(),
                   ));
             },
             width: double.infinity,

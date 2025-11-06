@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 import '../../../core/constants/app_colors.dart';
 
-class CustomTextField extends StatefulWidget {
-  const CustomTextField({
+class CustomFormTextField extends StatefulWidget {
+  const CustomFormTextField({
     super.key,
     this.onChanged,
     this.controller,
@@ -19,17 +19,16 @@ class CustomTextField extends StatefulWidget {
   final String? Function(String?)? validator;
 
   @override
-  State<CustomTextField> createState() => _CustomTextFieldState();
+  State<CustomFormTextField> createState() => _CustomFormTextFieldState();
 }
 
-class _CustomTextFieldState extends State<CustomTextField> {
+class _CustomFormTextFieldState extends State<CustomFormTextField> {
   bool obscureText = true;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10),
-      height: 60,
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(22),
         color: Colors.white,
@@ -42,6 +41,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         ],
       ),
       child: TextFormField(
+        autovalidateMode: AutovalidateMode.onUserInteraction,
           obscureText: widget.isPassword ? obscureText : false,
           style: TextStyle(
               color: Colors.black,

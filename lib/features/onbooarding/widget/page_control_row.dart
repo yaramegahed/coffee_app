@@ -1,5 +1,5 @@
 import 'package:coffee_app/features/home/widget/custom_button.dart';
-import 'package:coffee_app/features/login/login_view.dart';
+import 'package:coffee_app/features/login/view/login_view.dart';
 import 'package:flutter/material.dart';
 
 import 'coffee_beans_indicator.dart';
