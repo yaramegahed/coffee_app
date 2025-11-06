@@ -1,21 +1,41 @@
+import 'package:coffee_app/features/home/view/home_view.dart';
 import 'package:flutter/material.dart';
 import '../../../core/constants/app_colors.dart';
+import '../../scan/view/scan_view.dart';
 
-class HomeLayout extends StatelessWidget {
-  final void Function(int) onTap;
-  final int currentIndex;
+class HomeLayout extends StatefulWidget {
+
   const HomeLayout({
-    super.key, required this.onTap, required this.currentIndex,
+    super.key,
   });
+
+
+  @override
+  State<HomeLayout> createState() => _HomeLayoutState();
+}
+
+class _HomeLayoutState extends State<HomeLayout> {
+  int _selectedIndex = 0;
+  final List<Widget> _pages = [
+    HomeView(),
+    ScanView(),
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 70,
-      child: BottomNavigationBar(
+    return Scaffold(
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: _pages,
+      ),
+      bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        currentIndex: currentIndex,
-        onTap: onTap,
+        currentIndex: _selectedIndex,
+        onTap: (index){
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
         backgroundColor: Colors.white,
         selectedItemColor: AppColors.blueColor,
         unselectedItemColor: AppColors.greyColor,

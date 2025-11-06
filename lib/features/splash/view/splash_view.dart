@@ -1,7 +1,6 @@
+import 'package:coffee_app/features/home/widget/home_layout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../../home/view/home_view.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -19,7 +18,7 @@ class _SplashViewState extends State<SplashView> {
       await Navigator.pushReplacement(
           context,
           CupertinoPageRoute(
-            builder: (context) => HomeView(),
+            builder: (context) => HomeLayout(),
           ));
     });
   }
