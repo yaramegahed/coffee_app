@@ -1,15 +1,13 @@
 import 'package:coffee_app/features/home/view/home_view.dart';
-import 'package:coffee_app/features/order/view/order_view.dart';
+import 'package:coffee_app/features/order/widget/order_navigator.dart';
 import 'package:flutter/material.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../scan/view/scan_view.dart';
 
 class HomeLayout extends StatefulWidget {
-
   const HomeLayout({
     super.key,
   });
-
 
   @override
   State<HomeLayout> createState() => _HomeLayoutState();
@@ -17,11 +15,7 @@ class HomeLayout extends StatefulWidget {
 
 class _HomeLayoutState extends State<HomeLayout> {
   int _selectedIndex = 0;
-  final List<Widget> _pages = [
-    HomeView(),
-    ScanView(),
-    OrderView(),
-  ];
+  final List<Widget> _pages = [HomeView(), ScanView(), OrderNavigator()];
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +27,7 @@ class _HomeLayoutState extends State<HomeLayout> {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: _selectedIndex,
-        onTap: (index){
+        onTap: (index) {
           setState(() {
             _selectedIndex = index;
           });

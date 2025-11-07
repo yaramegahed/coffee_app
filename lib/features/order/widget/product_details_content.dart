@@ -46,7 +46,9 @@ class ProductDetailsContent extends StatelessWidget {
             const Spacer(),
             CustomButton(
               title: "Customize",
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).pushNamed('/customize');
+              },
               buttonColor: AppColors.freshMintColor,
             ),
           ],
