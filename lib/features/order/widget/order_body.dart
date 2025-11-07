@@ -1,6 +1,6 @@
 import 'package:coffee_app/core/widget/custom_menu_categorized_row.dart';
 import 'package:coffee_app/core/widget/custom_menu_items.dart';
-import 'package:coffee_app/features/order/widget/product_details.dart';
+import 'package:coffee_app/features/order/view/product_details.dart';
 import 'package:flutter/material.dart';
 
 class OrderBody extends StatelessWidget {
