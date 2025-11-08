@@ -1,7 +1,8 @@
 import 'package:coffee_app/core/widget/custom_auth_container.dart';
-import 'package:coffee_app/features/register/widget/custom_register_container_child.dart';
 import 'package:flutter/material.dart';
-import '../../../core/widget/skip_text.dart';
+
+import '../../../../core/widget/skip_text.dart';
+import 'custom_register_container_child.dart';
 
 class RegisterBody extends StatelessWidget {
   const RegisterBody({

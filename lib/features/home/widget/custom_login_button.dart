@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/constants/app_colors.dart';
+import '../../auth/login/view/login_view.dart';
 
 class CustomLoginButton extends StatelessWidget {
   const CustomLoginButton({
@@ -9,12 +10,18 @@ class CustomLoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => LoginView(),
+            ));
+      },
       child: Container(
         height: 60,
         width: 320,
         decoration: BoxDecoration(
-          color: Colors.white,
+            color: Colors.white,
             boxShadow: [
               BoxShadow(
                   color: AppColors.shadowColor,
@@ -22,13 +29,12 @@ class CustomLoginButton extends StatelessWidget {
                   offset: Offset(0, 4))
             ],
             borderRadius: BorderRadius.circular(22),
-            border:
-            Border.all(color: AppColors.freshMintColor, width: 2)),
+            border: Border.all(color: AppColors.freshMintColor, width: 2)),
         child: Center(
             child: Text(
-              "LOGIN",
-              style: TextStyle(color: AppColors.freshMintColor),
-            )),
+          "LOGIN",
+          style: TextStyle(color: AppColors.freshMintColor),
+        )),
       ),
     );
   }

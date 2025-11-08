@@ -1,10 +1,9 @@
 import 'package:coffee_app/core/validator/app_validators.dart';
-import 'package:coffee_app/features/login/view/login_view.dart';
-import 'package:coffee_app/features/register/widget/text_form_field_title.dart';
+import 'package:coffee_app/features/auth/register/widget/text_form_field_title.dart';
 import 'package:flutter/material.dart';
-
-import '../../../core/constants/app_colors.dart';
-import '../../home/widget/custom_button.dart';
+import '../../../../core/constants/app_colors.dart';
+import '../../../home/widget/custom_button.dart';
+import '../../login/view/login_view.dart';
 import 'custom_text_field.dart';
 
 class CustomRegisterContainerChild extends StatefulWidget {

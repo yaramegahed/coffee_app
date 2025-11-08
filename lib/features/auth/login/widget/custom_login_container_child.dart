@@ -1,9 +1,8 @@
-import 'package:coffee_app/features/register/view/register_view.dart';
 import 'package:flutter/material.dart';
-
-import '../../../core/constants/app_colors.dart';
-import '../../../core/validator/app_validators.dart';
-import '../../home/widget/custom_button.dart';
+import '../../../../core/constants/app_colors.dart';
+import '../../../../core/validator/app_validators.dart';
+import '../../../home/widget/custom_button.dart';
+import '../../register/view/register_view.dart';
 import '../../register/widget/custom_text_field.dart';
 import '../../register/widget/text_form_field_title.dart';
 

@@ -1,7 +1,7 @@
-import 'package:coffee_app/features/register/view/register_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../core/constants/app_colors.dart';
+import '../../auth/register/view/register_view.dart';
 import 'custom_button.dart';
 import 'custom_login_container.dart';
 
