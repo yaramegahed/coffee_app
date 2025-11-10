@@ -1,11 +1,12 @@
+import 'package:coffee_app/core/cubit/products_cubit.dart';
 import 'package:coffee_app/core/utils/styles.dart';
-import 'package:coffee_app/features/home/cubit/home_cubit.dart';
+import 'package:coffee_app/features/all_product/view/all_product_view.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../core/widget/custom_grid_view.dart';
 import 'custom_home_order_container.dart';
 import '../../../core/widget/custom_menu_categorized_row.dart';
-import '../../../core/widget/custom_menu_items.dart';
 import 'skeleton_screen.dart';
 
 class CustomHomeBody extends StatelessWidget {
@@ -13,13 +14,13 @@ class CustomHomeBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<HomeCubit, HomeState>(
+    return BlocConsumer<ProductsCubit, ProductsState>(
       listener: (context, state) {
-        if (state is HomeSuccess) {
+        if (state is ProductsSuccess) {
           if (kDebugMode) {
-            print("✅ Success loading products!");
+            print("Success loading products");
           }
-        } else if (state is HomeFailure) {
+        } else if (state is ProductsFailure) {
           if (kDebugMode) {
             print(state.message);
           }
@@ -34,71 +35,62 @@ class CustomHomeBody extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        if (state is HomeLoading) {
+        if (state is ProductsLoading) {
           return const SkeletonScreen();
         }
 
-        if (state is HomeSuccess) {
-          final products = state.products;
-          final categories = products.map((p) => p.category).toSet();
-
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25.0),
-            child: SingleChildScrollView(
+        if (state is ProductsSuccess) {
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 22),
-
-                  // Greeting
                   Text("Good Morning!", style: Styles.textStyle20b),
                   Text("Login and get free ☕️", style: Styles.textStyle20400),
-
                   const SizedBox(height: 18),
-
                   const CustomHomeOrderContainer(),
-
-                  ...categories.map((category) {
-                    final categoryProducts =
-                        products.where((p) => p.category == category).toList();
-                    final limitedProducts = categoryProducts.take(5).toList();
-
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CustomMenuCategorizedRow(
-                          menuTitle: category ?? "",
-                          onPressed: () {},
-                        ),
-                        GridView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: limitedProducts.length,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 10,
-                            childAspectRatio: 0.7,
-                          ),
-                          itemBuilder: (context, index) {
-                            final product = categoryProducts[index];
-                            return CustomMenuItems(
-                              itemTitle: product.name ?? "",
-                              itemImage: product.imageUrl,
-                            );
-                          },
-                        ),
-                        const SizedBox(height: 30),
-                      ],
-                    );
-                  }),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CustomMenuCategorizedRow(
+                        menuTitle: state.coffee.first.category??"",
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => BlocProvider.value(
+                                      value: context.read<ProductsCubit>(),
+                                      child: AllProductView(products: state.coffee))));
+                        },
+                      ),
+                      CustomGridView(products: state.coffee, itemCount: state.coffee.take(5).length,),
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CustomMenuCategorizedRow(
+                        menuTitle: state.cookie.first.category??"",
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => BlocProvider.value(
+                                      value: context.read<ProductsCubit>(),
+                                      child: AllProductView(products: state.cookie,))));
+                        },
+                      ),
+                      CustomGridView(products: state.cookie, itemCount: state.cookie.take(5).length,),
+                      SizedBox(height: 20,),
+                    ],
+                  ),
                 ],
               ),
             ),
           );
         }
-
         return const Center(child: CircularProgressIndicator());
       },
     );

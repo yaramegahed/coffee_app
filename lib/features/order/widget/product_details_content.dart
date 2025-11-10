@@ -2,11 +2,13 @@ import 'package:coffee_app/features/order/widget/quantity_section.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/constants/app_colors.dart';
+import '../../../core/models/products_model.dart';
 import '../../home/widget/custom_button.dart';
 import 'drop_down_section.dart';
 
 class ProductDetailsContent extends StatelessWidget {
-  const ProductDetailsContent({super.key});
+  final Product product;
+  const ProductDetailsContent({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +49,8 @@ class ProductDetailsContent extends StatelessWidget {
             CustomButton(
               title: "Customize",
               onTap: () {
-                Navigator.of(context).pushNamed('/customize');
+                Navigator.of(context)
+                    .pushNamed('/customize', arguments: product);
               },
               buttonColor: AppColors.freshMintColor,
             ),

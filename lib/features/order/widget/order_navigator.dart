@@ -3,6 +3,8 @@ import 'package:coffee_app/features/order/view/order_view.dart';
 import 'package:coffee_app/features/order/view/product_details_view.dart';
 import 'package:flutter/material.dart';
 
+import '../../../core/models/products_model.dart';
+
 class OrderNavigator extends StatelessWidget {
   const OrderNavigator({super.key});
 
@@ -11,16 +13,17 @@ class OrderNavigator extends StatelessWidget {
     return Navigator(
       initialRoute: '/order',
       onGenerateRoute: (settings) {
+        final product = settings.arguments as Product?;
         Widget page;
         switch (settings.name) {
           case '/order':
             page = const OrderView();
             break;
           case '/details':
-            page = const ProductDetailsView();
+            page =  ProductDetailsView(product: product!,);
             break;
           case '/customize':
-            page = const CustomizeView();
+            page =  CustomizeView(product: product!,);
             break;
           default:
             page = const OrderView();

@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import '../../../core/constants/app_colors.dart';
 
 class ProductDetailsContainer extends StatelessWidget {
+  final String itemImage;
+  final String itemName;
   const ProductDetailsContainer({
-    super.key,
+    super.key,  required this.itemImage,  required this.itemName,
   });
 
   @override
@@ -19,15 +21,18 @@ class ProductDetailsContainer extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(
-                "assets/images/Mixed Black Coffee1.png",
-                height: 100,
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.network(
+                  itemImage??"",
+                  height: 100,
+                ),
               ),
               SizedBox(
                 width: 20,
               ),
               Text(
-                "Hot Coffee",
+                itemName??"",
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 20,
