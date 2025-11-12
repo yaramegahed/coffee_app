@@ -10,6 +10,7 @@ class AppColors {
   static const  blueColor = Color(0xFF0088FF);
   static const  greyColor = Color(0xFF999999);
   static const  registerBGColor = Color(0xFFF8EBD8);
+  static const  greenColor = Color(0xFF024B1F);
   static const  shadowColor = Color(0x25000000);
 
 }

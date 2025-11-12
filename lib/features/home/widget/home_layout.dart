@@ -1,3 +1,4 @@
+import 'package:coffee_app/features/account/view/account_view.dart';
 import 'package:coffee_app/features/home/view/home_view.dart';
 import 'package:coffee_app/features/order/widget/order_navigator.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,12 @@ class HomeLayout extends StatefulWidget {
 
 class _HomeLayoutState extends State<HomeLayout> {
   int _selectedIndex = 0;
-  final List<Widget> _pages = [HomeView(), ScanView(), OrderNavigator()];
+  final List<Widget> _pages = [
+    HomeView(),
+    ScanView(),
+    OrderNavigator(),
+    AccountView()
+  ];
 
   @override
   Widget build(BuildContext context) {
