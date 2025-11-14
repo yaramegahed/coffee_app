@@ -42,7 +42,6 @@ class OrderBody extends StatelessWidget {
                           products: state.coffee,
                           itemCount: state.coffee.length,
                           onTap: (product) {
-                            print("${product.name}");
                             Navigator.of(context)
                                 .pushNamed('/details', arguments: product);
                           },
@@ -53,7 +52,6 @@ class OrderBody extends StatelessWidget {
                         ),
                         CustomGridView(
                           onTap: (product) {
-                            print("${product.name}");
                             Navigator.of(context)
                                 .pushNamed('/details', arguments: product);
                           },

@@ -24,7 +24,7 @@ class ProductDetailsContainer extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: Image.network(
-                  itemImage??"",
+                  itemImage,
                   height: 100,
                 ),
               ),
@@ -32,7 +32,7 @@ class ProductDetailsContainer extends StatelessWidget {
                 width: 20,
               ),
               Text(
-                itemName??"",
+                itemName,
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 20,

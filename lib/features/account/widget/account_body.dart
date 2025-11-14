@@ -130,4 +130,3 @@ class AccountBody extends StatelessWidget {
     );
   }
 }
-

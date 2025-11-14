@@ -1,7 +1,11 @@
+import 'package:coffee_app/core/utils/styles.dart';
 import 'package:coffee_app/core/validator/app_validators.dart';
 import 'package:coffee_app/features/auth/register/widget/text_form_field_title.dart';
+import 'package:coffee_app/features/home/widget/home_layout.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/utils/functions.dart';
 import '../../../home/widget/custom_button.dart';
 import '../../login/view/login_view.dart';
 import 'custom_text_field.dart';
@@ -12,11 +16,17 @@ class CustomRegisterContainerChild extends StatefulWidget {
   });
 
   @override
-  State<CustomRegisterContainerChild> createState() => _CustomRegisterContainerChildState();
+  State<CustomRegisterContainerChild> createState() =>
+      _CustomRegisterContainerChildState();
 }
 
-class _CustomRegisterContainerChildState extends State<CustomRegisterContainerChild> {
+class _CustomRegisterContainerChildState
+    extends State<CustomRegisterContainerChild> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController userNameController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -26,11 +36,7 @@ class _CustomRegisterContainerChildState extends State<CustomRegisterContainerCh
         children: [
           Text(
             "Sign Up",
-            style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-                fontFamily: "Poppins",
-                color: AppColors.brownButtonColor),
+            style: Styles.textStyle28b,
           ),
           SizedBox(
             height: 10,
@@ -43,6 +49,7 @@ class _CustomRegisterContainerChildState extends State<CustomRegisterContainerCh
             title: "Username",
           ),
           CustomFormTextField(
+            controller: userNameController,
             validator: (value) => AppValidators.userName(value),
             hintText: 'Enter username',
           ),
@@ -50,6 +57,8 @@ class _CustomRegisterContainerChildState extends State<CustomRegisterContainerCh
             title: "Email or phone number",
           ),
           CustomFormTextField(
+            controller: emailController,
+            onChanged: (value) {},
             validator: (value) => AppValidators.emailOrPhone(value),
             hintText: 'Type your email or phone number',
           ),
@@ -57,6 +66,7 @@ class _CustomRegisterContainerChildState extends State<CustomRegisterContainerCh
             title: "Password",
           ),
           CustomFormTextField(
+            controller: passwordController,
             validator: (value) => AppValidators.password(value),
             isPassword: true,
             hintText: 'Type your password',
@@ -67,7 +77,29 @@ class _CustomRegisterContainerChildState extends State<CustomRegisterContainerCh
           CustomButton(
             hasShadow: true,
             title: "REGISTER",
-            onTap: () {},
+            onTap: () async {
+              if (_formKey.currentState!.validate()) {
+                try {
+                  UserCredential user = await FirebaseAuth.instance
+                      .createUserWithEmailAndPassword(
+                    email: emailController.text.trim(),
+                    password: passwordController.text.trim(),
+                  );
+                  if (context.mounted) {
+                    showSnackBar(context, success: true,successText: "Account created successfully!");
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HomeLayout(),
+                        ));
+                  }
+                }  on FirebaseAuthException catch (e) {
+                  if (context.mounted) {
+                    showSnackBar(context, message: e.message, success: false);
+                  }
+                }
+              }
+            },
             width: double.infinity,
           ),
           Padding(

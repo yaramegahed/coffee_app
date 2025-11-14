@@ -1,6 +1,10 @@
 class AppValidators {
   static String? userName(String? value) {
-    if (value == null || value.trim().isEmpty) return 'This field is required';
+    if (value == null || value.trim().isEmpty) {
+      return 'This field is required';
+    } else if (value.trim().length < 3) {
+      return 'Username must be at least 3 characters';
+    }
     return null;
   }
 
@@ -23,7 +27,11 @@ class AppValidators {
   }
 
   static String? password(String? value) {
-    if (value == null || value.length < 8) return 'Too short';
+    if (value == null || value.trim().isEmpty) {
+      return 'This field is required';
+    } else if (value.length < 8) {
+      return 'Too short';
+    }
     return null;
   }
 }

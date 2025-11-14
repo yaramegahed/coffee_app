@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/utils/functions.dart';
 import '../../../../core/validator/app_validators.dart';
 import '../../../home/widget/custom_button.dart';
+import '../../../home/widget/home_layout.dart';
 import '../../register/view/register_view.dart';
 import '../../register/widget/custom_text_field.dart';
 import '../../register/widget/text_form_field_title.dart';
@@ -16,6 +19,8 @@ class CustomLoginContainerChild extends StatefulWidget {
 
 class _CustomLoginContainerChildState extends State<CustomLoginContainerChild> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +48,7 @@ class _CustomLoginContainerChildState extends State<CustomLoginContainerChild> {
             title: "Email or phone number",
           ),
           CustomFormTextField(
+            controller: emailController,
             validator: (value) => AppValidators.emailOrPhone(value),
             hintText: 'Type your email or phone number',
           ),
@@ -50,6 +56,7 @@ class _CustomLoginContainerChildState extends State<CustomLoginContainerChild> {
             title: "Password",
           ),
           CustomFormTextField(
+            controller: passwordController,
             validator: (value) => AppValidators.password(value),
             isPassword: true,
             hintText: 'Type your password',
@@ -60,7 +67,29 @@ class _CustomLoginContainerChildState extends State<CustomLoginContainerChild> {
           CustomButton(
             hasShadow: true,
             title: "LOGIN",
-            onTap: () {},
+            onTap: () async{
+              if (_formKey.currentState!.validate()) {
+                try {
+                  UserCredential user = await FirebaseAuth.instance
+                      .signInWithEmailAndPassword(
+                    email: emailController.text.trim(),
+                    password: passwordController.text.trim(),
+                  );
+                  if (context.mounted) {
+                    showSnackBar(context, success: true,successText: "Account login successfully!");
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HomeLayout(),
+                        ));
+                  }
+                } on FirebaseAuthException catch (e) {
+                  if (context.mounted) {
+                    showSnackBar(context, message: e.message, success: false);
+                  }
+                }
+              }
+            },
             width: double.infinity,
           ),
           Row(
