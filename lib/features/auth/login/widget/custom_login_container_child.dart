@@ -1,3 +1,5 @@
+import 'package:coffee_app/core/utils/styles.dart';
+import 'package:coffee_app/features/auth/login/widget/reset_row.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/constants/app_colors.dart';
@@ -31,17 +33,13 @@ class _CustomLoginContainerChildState extends State<CustomLoginContainerChild> {
         children: [
           const Text(
             "Sign in",
-            style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-                fontFamily: "Poppins",
-                color: AppColors.brownButtonColor),
+            style: Styles.textStyle28b
           ),
           const SizedBox(
             height: 10,
           ),
           const Text(
-            "It’s coffee time! Login and lets get all the coffee in the world! Or at least iced coffee. ",
+            "It’s coffee time! Login and lets get all the coffee in the world! Or at least iced coffee.",
             style: TextStyle(fontSize: 16, color: AppColors.brownButtonColor),
           ),
           const TextFormFieldTitle(
@@ -67,16 +65,18 @@ class _CustomLoginContainerChildState extends State<CustomLoginContainerChild> {
           CustomButton(
             hasShadow: true,
             title: "LOGIN",
-            onTap: () async{
+            onTap: () async {
               if (_formKey.currentState!.validate()) {
                 try {
-                  UserCredential user = await FirebaseAuth.instance
-                      .signInWithEmailAndPassword(
+                  UserCredential user =
+                      await FirebaseAuth.instance.signInWithEmailAndPassword(
                     email: emailController.text.trim(),
                     password: passwordController.text.trim(),
                   );
                   if (context.mounted) {
-                    showSnackBar(context, success: true,successText: "Account login successfully!");
+                    showSnackBar(context,
+                        success: true,
+                        successText: "Account login successfully!");
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
@@ -92,23 +92,7 @@ class _CustomLoginContainerChildState extends State<CustomLoginContainerChild> {
             },
             width: double.infinity,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    "Forgot password?",
-                    style: TextStyle(color: AppColors.freshMintColor),
-                  )),
-              Text(
-                "Reset",
-                style: TextStyle(
-                    color: AppColors.brownButtonColor,
-                    fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
+          ResetRow(onPressed: () {  },),
           const Padding(
             padding: EdgeInsets.symmetric(vertical: 10.0),
             child: Center(
@@ -135,3 +119,4 @@ class _CustomLoginContainerChildState extends State<CustomLoginContainerChild> {
     );
   }
 }
+

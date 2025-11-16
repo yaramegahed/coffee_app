@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coffee_app/core/utils/styles.dart';
 import 'package:coffee_app/core/validator/app_validators.dart';
 import 'package:coffee_app/features/auth/register/widget/text_form_field_title.dart';
@@ -26,6 +27,7 @@ class _CustomRegisterContainerChildState
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController userNameController = TextEditingController();
+  CollectionReference users = FirebaseFirestore.instance.collection("users");
 
   @override
   Widget build(BuildContext context) {
@@ -85,15 +87,22 @@ class _CustomRegisterContainerChildState
                     email: emailController.text.trim(),
                     password: passwordController.text.trim(),
                   );
+                  String uid = user.user!.uid;
+                   users.doc(uid).set({
+                    "name": userNameController.text.trim(),
+                    "email": emailController.text.trim(),
+                  });
                   if (context.mounted) {
-                    showSnackBar(context, success: true,successText: "Account created successfully!");
+                    showSnackBar(context,
+                        success: true,
+                        successText: "Account created successfully!");
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                           builder: (context) => HomeLayout(),
                         ));
                   }
-                }  on FirebaseAuthException catch (e) {
+                } on FirebaseAuthException catch (e) {
                   if (context.mounted) {
                     showSnackBar(context, message: e.message, success: false);
                   }

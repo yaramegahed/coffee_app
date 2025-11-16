@@ -1,6 +1,6 @@
 import 'package:coffee_app/core/constants/app_colors.dart';
 import 'package:coffee_app/core/widget/custom_app_bar.dart';
-import 'package:coffee_app/features/all_product/widget/all_product_body.dart';
+import 'package:coffee_app/features/all_products/widget/all_product_body.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/models/products_model.dart';

@@ -1,6 +1,6 @@
-part of 'products_cubit.dart';
 
-@immutable
+import '../models/products_model.dart';
+
 abstract class ProductsState {}
 
 class ProductsInitial extends ProductsState {}

@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:coffee_app/features/home/widget/home_layout.dart';
+import 'package:flutter/cupertino.dart';
 
 class SkipText extends StatelessWidget {
   const SkipText({
@@ -12,9 +13,18 @@ class SkipText extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Text(
-            "Skip",
-            style: TextStyle(fontSize: 18),
+          GestureDetector(
+            onTap: () {
+              Navigator.pushReplacement(
+                  context,
+                  CupertinoPageRoute(
+                    builder: (context) => HomeLayout(),
+                  ));
+            },
+            child: Text(
+              "Skip",
+              style: TextStyle(fontSize: 18),
+            ),
           ),
         ],
       ),

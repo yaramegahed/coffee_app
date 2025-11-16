@@ -6,8 +6,10 @@ import '../../../core/constants/app_colors.dart';
 import '../../scan/view/scan_view.dart';
 
 class HomeLayout extends StatefulWidget {
+  final int initialIndex;
+
   const HomeLayout({
-    super.key,
+    super.key,  this.initialIndex=0,
   });
 
   @override
@@ -22,6 +24,11 @@ class _HomeLayoutState extends State<HomeLayout> {
     OrderNavigator(),
     AccountView()
   ];
+  @override
+  void initState() {
+    super.initState();
+    _selectedIndex=widget.initialIndex;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +50,7 @@ class _HomeLayoutState extends State<HomeLayout> {
         unselectedItemColor: AppColors.greyColor,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.home_outlined),
             label: 'Home',
           ),
           BottomNavigationBarItem(

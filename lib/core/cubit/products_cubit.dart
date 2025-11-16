@@ -1,10 +1,8 @@
-import 'package:bloc/bloc.dart';
+import 'package:coffee_app/core/cubit/products_state.dart';
 import 'package:coffee_app/core/repos/product_repo.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/models/products_model.dart';
 
-part 'products_state.dart';
 
 class ProductsCubit extends Cubit<ProductsState> {
   ProductsCubit() : super(ProductsInitial());
