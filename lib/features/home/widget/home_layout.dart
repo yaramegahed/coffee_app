@@ -1,6 +1,7 @@
 import 'package:coffee_app/features/account/view/account_view.dart';
 import 'package:coffee_app/features/home/view/home_view.dart';
 import 'package:coffee_app/features/order/widget/order_navigator.dart';
+import 'package:coffee_app/features/rewards/view/rewards_view.dart';
 import 'package:flutter/material.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../scan/view/scan_view.dart';
@@ -22,7 +23,8 @@ class _HomeLayoutState extends State<HomeLayout> {
     HomeView(),
     ScanView(),
     OrderNavigator(),
-    AccountView()
+    AccountView(),
+    RewardsView()
   ];
   @override
   void initState() {

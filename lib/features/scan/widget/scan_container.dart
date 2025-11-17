@@ -43,7 +43,7 @@ class ScanContainer extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           QrImageView(
-            data: "USER-QR-12345",
+            data: "www.linkedin.com/in/yara-megahed",
             size: 190,
             backgroundColor: Colors.white,
           ),
