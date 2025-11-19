@@ -1,3 +1,4 @@
+import 'package:coffee_app/features/cart/view/cart_view.dart';
 import 'package:coffee_app/features/order/view/customize_view.dart';
 import 'package:coffee_app/features/order/view/order_view.dart';
 import 'package:coffee_app/features/order/view/product_details_view.dart';
@@ -24,6 +25,9 @@ class OrderNavigator extends StatelessWidget {
             break;
           case '/customize':
             page =  CustomizeView(product: product!,);
+            break;
+            case '/cart':
+            page =  CartView();
             break;
           default:
             page = const OrderView();

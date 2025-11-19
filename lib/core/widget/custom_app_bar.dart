@@ -25,7 +25,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           )),
       actions: [
         IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushNamed("/cart");
+            },
             icon: Icon(
               Icons.shopping_bag_outlined,
               size: 30,

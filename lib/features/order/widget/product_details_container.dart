@@ -5,8 +5,11 @@ import '../../../core/constants/app_colors.dart';
 class ProductDetailsContainer extends StatelessWidget {
   final String itemImage;
   final String itemName;
+
   const ProductDetailsContainer({
-    super.key,  required this.itemImage,  required this.itemName,
+    super.key,
+    required this.itemImage,
+    required this.itemName,
   });
 
   @override
@@ -19,27 +22,23 @@ class ProductDetailsContainer extends StatelessWidget {
       ),
       child: Center(
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Image.network(
-                  itemImage,
-                  height: 100,
-                ),
-              ),
-              SizedBox(
-                width: 20,
-              ),
-              Text(
-                itemName,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold),
-              ),
-            ],
-          )),
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ClipRRect(
+            child: Image.network(
+              itemImage,
+            ),
+          ),
+          SizedBox(
+            width: 20,
+          ),
+          Text(
+            itemName,
+            style: TextStyle(
+                color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+        ],
+      )),
     );
   }
 }

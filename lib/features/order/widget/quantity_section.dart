@@ -5,11 +5,12 @@ import 'package:flutter/material.dart';
 class QuantitySection extends StatelessWidget {
   final String title;
   final String itemName;
+  final void Function(int)? onChanged;
 
   const QuantitySection({
     super.key,
     required this.title,
-    required this.itemName,
+    required this.itemName, this.onChanged,
   });
 
   @override
@@ -19,7 +20,7 @@ class QuantitySection extends StatelessWidget {
       children: [
         SectionTitle(title),
         const SizedBox(height: 10),
-        QuantitySelector(itemName: itemName),
+        QuantitySelector(itemName: itemName,onChanged: onChanged,),
         const SizedBox(height: 20),
       ],
     );
