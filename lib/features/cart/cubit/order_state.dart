@@ -9,6 +9,11 @@ class OrdersSuccess extends OrdersState {
 
   OrdersSuccess({required this.orders});
 }
+class OrdersCountSuccess extends OrdersState {
+  final int count;
+
+  OrdersCountSuccess({required this.count});
+}
 
 class OrdersFailure extends OrdersState {
   final String message;

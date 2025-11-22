@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coffee_app/core/api_services/api_services.dart';
 import 'package:flutter/foundation.dart';
 
@@ -5,13 +6,41 @@ import '../models/products_model.dart';
 
 class ProductRepo {
   final ApiServices apiServices = ApiServices();
-  // {{baseUrl}}/products?category=cookie
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  /// جلب المنتجات من API وإضافة السعر على Firestore
   Future<List<Product>> getProducts({required String category}) async {
-    final data = await apiServices.get(endPoint: "/products?category=$category");
-    if (kDebugMode) {
-      print(data);
+    try {
+      // 1️⃣ جلب البيانات من API
+      final data = await apiServices.get(endPoint: "/products?category=$category");
+
+      if (kDebugMode) {
+        print("API Data: $data");
+      }
+
+      // 2️⃣ تحويل البيانات لنماذج Product
+      final productsModel = ProductsModel.fromJson(data);
+      final products = productsModel.products;
+
+      // 3️⃣ تحديث Firestore بالأسعار
+      for (var product in products) {
+        final docRef = _firestore.collection('products').doc(product.id.toString());
+
+        // حدد السعر الافتراضي هنا حسب حاجتك
+        const defaultPrice = 6.99;
+
+        await docRef.set({
+          'price': defaultPrice,
+          'imageUrl': product.imageUrl,
+        }, SetOptions(merge: true));
+      }
+
+      return products;
+    } catch (e) {
+      if (kDebugMode) {
+        print("Error in getProducts: $e");
+      }
+      return [];
     }
-    final productsModel = ProductsModel.fromJson(data);
-    return productsModel.products;
   }
 }

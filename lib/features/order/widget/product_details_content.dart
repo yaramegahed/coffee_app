@@ -87,10 +87,13 @@ class _ProductDetailsContentState extends State<ProductDetailsContent> {
                   if (FirebaseAuth.instance.currentUser != null) {
                     userId = FirebaseAuth.instance.currentUser!.uid;
                   } else {
-                    userId = "guest_${DateTime.now().millisecondsSinceEpoch}";
+                    userId = "guest_${DateTime
+                        .now()
+                        .millisecondsSinceEpoch}";
                   }
                   await FirebaseFirestore.instance.collection("orders").add({
                     "creamer": creamer,
+                    "cupSize": cupSize,
                     "flavorQty": flavorQty,
                     "sweetenerQty": sweetenerQty,
                     "addIns": addIns,
@@ -98,6 +101,7 @@ class _ProductDetailsContentState extends State<ProductDetailsContent> {
                     "productId": widget.product.id,
                     "productName": widget.product.name,
                     "category": widget.product.category,
+                    "price": widget.product.price,
                   });
                   print("Order added to cart successfully!");
                   Navigator.of(context).pushNamed("/cart");

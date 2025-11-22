@@ -8,12 +8,11 @@ class OrdersCubit extends Cubit<OrdersState> {
 
   final _ordersCollection = FirebaseFirestore.instance.collection('orders');
 
-  /// Fetch user orders
   Future<void> fetchOrders(String userId) async {
     emit(OrdersLoading());
     try {
       final snapshot =
-      await _ordersCollection.where('userId', isEqualTo: userId).get();
+          await _ordersCollection.where('userId', isEqualTo: userId).get();
 
       final orders = snapshot.docs.map((doc) {
         final data = doc.data();
@@ -27,7 +26,6 @@ class OrdersCubit extends Cubit<OrdersState> {
     }
   }
 
-  /// Add new order
   Future<void> addOrder(Map<String, dynamic> orderData) async {
     try {
       final newDoc = await _ordersCollection.add(orderData);
@@ -46,7 +44,6 @@ class OrdersCubit extends Cubit<OrdersState> {
     }
   }
 
-  /// Update quantity
   Future<void> updateQuantity(String orderId, int quantity) async {
     try {
       await _ordersCollection.doc(orderId).update({'quantity': quantity});
@@ -66,7 +63,6 @@ class OrdersCubit extends Cubit<OrdersState> {
     }
   }
 
-  /// Remove order
   Future<void> removeOrder(String orderId) async {
     try {
       await _ordersCollection.doc(orderId).delete();
@@ -82,5 +78,14 @@ class OrdersCubit extends Cubit<OrdersState> {
     } catch (e) {
       emit(OrdersFailure(message: e.toString()));
     }
+  }
+
+  void listenOrdersCount(String userId) {
+    _ordersCollection
+        .where('userId', isEqualTo: userId)
+        .snapshots()
+        .listen((snapshot) {
+      emit(OrdersCountSuccess(count: snapshot.docs.length));
+    });
   }
 }
