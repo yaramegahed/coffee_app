@@ -6,7 +6,7 @@ class CustomDropDownButton extends StatefulWidget {
   final List<String> items;
   final String hint;
   final Function(String?) onChanged;
-  final String? initialValue; // بدل late final selectedValue
+  final String? initialValue;
 
   const CustomDropDownButton({
     super.key,
@@ -26,7 +26,8 @@ class CustomDropDownButtonState extends State<CustomDropDownButton> {
   @override
   void initState() {
     super.initState();
-    selectedValue = widget.initialValue;
+    selectedValue =
+        widget.items.contains(widget.initialValue) ? widget.initialValue : null;
   }
 
   @override
@@ -76,4 +77,3 @@ class CustomDropDownButtonState extends State<CustomDropDownButton> {
     );
   }
 }
-

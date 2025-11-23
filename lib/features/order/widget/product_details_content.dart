@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:coffee_app/core/utils/functions.dart';
 import 'package:coffee_app/features/order/widget/quantity_section.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/constants/app_colors.dart';
@@ -18,107 +20,144 @@ class ProductDetailsContent extends StatefulWidget {
 }
 
 class _ProductDetailsContentState extends State<ProductDetailsContent> {
-  String? cupSize;
-  String? addIns;
-  String? creamer;
-  int sweetenerQty = 0;
-  int flavorQty = 0;
+  final Map<String, dynamic> selectedValues = {};
+  final Map<String, int> quantities = {};
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "What's included",
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 20),
-        DropDownSection(
-          onChanged: (value) {
-            cupSize = value;
-          },
-          title: "Cup Size",
-          items: ["Large", "Small", "Med"],
-          hint: "Choose your size",
-        ),
-        DropDownSection(
-          onChanged: (value) {
-            addIns = value;
-          },
-          title: "Add-Ins",
-          items: ["Regular Ice", "Crushed Ice", "Shaved Ice"],
-          hint: "Choose ice type",
-        ),
-        QuantitySection(
-          itemName: "Splenda® packets",
-          title: "Sweetener",
-          onChanged: (value) {
-            sweetenerQty = value;
-          },
-        ),
-        QuantitySection(
-          itemName: "Pumpkin Spice",
-          title: "Flavor",
-          onChanged: (value) {
-            flavorQty = value;
-          },
-        ),
-        DropDownSection(
-          onChanged: (value) {
-            creamer = value;
-          },
-          title: "Creamer",
-          items: ["Oat milk", "Coconut milk", "Almond milk"],
-          hint: "Choose creamer type",
-        ),
-        const SizedBox(height: 20),
-        Row(
-          children: [
-            CustomButton(
-                title: "Add to Cart",
-                onTap: () async {
-                  String userId;
+    return FutureBuilder(
+      future: getOptions(widget.product.category?.toLowerCase() ?? "ice cream"),
+      builder: (BuildContext context, snapshot) {
+        if (snapshot.hasError) {
+          return Center(child: Text("Failed to load options"));
+        }
+        if (!snapshot.hasData) {
+          return Center(child: CircularProgressIndicator());
+        }
 
-                  if (FirebaseAuth.instance.currentUser != null) {
-                    userId = FirebaseAuth.instance.currentUser!.uid;
-                  } else {
-                    userId = "guest_${DateTime
-                        .now()
-                        .millisecondsSinceEpoch}";
-                  }
-                  await FirebaseFirestore.instance.collection("orders").add({
-                    "creamer": creamer,
-                    "cupSize": cupSize,
-                    "flavorQty": flavorQty,
-                    "sweetenerQty": sweetenerQty,
-                    "addIns": addIns,
-                    "userId": userId,
-                    "productId": widget.product.id,
-                    "productName": widget.product.name,
-                    "category": widget.product.category,
-                    "price": widget.product.price,
-                  });
-                  print("Order added to cart successfully!");
-                  Navigator.of(context).pushNamed("/cart");
-                }),
-            const Spacer(),
-            CustomButton(
-              title: "Customize",
-              onTap: () {
-                Navigator.of(context)
-                    .pushNamed('/customize', arguments: widget.product);
-              },
-              buttonColor: AppColors.freshMintColor,
-            ),
+        final options = snapshot.data as Map<String, dynamic>;
+
+        final Map<String, List<Map<String, String>>> categoryFields = {
+          "coffee": [
+            {"type": "dropdown", "key": "cupSizes"},
+            {"type": "dropdown", "key": "addIns"},
+            {"type": "quantity", "key": "sweetenerOptions"},
+            {"type": "quantity", "key": "flavorOptions"},
+            {"type": "dropdown", "key": "creamers"},
           ],
-        ),
-        const SizedBox(height: 20),
-      ],
+          "cookie": [
+            {"type": "dropdown", "key": "flavors"},
+            {"type": "dropdown", "key": "sizes"},
+            {"type": "dropdown", "key": "toppings"},
+          ],
+        };
+
+        final Map<String, String> fieldTitles = {
+          "cupSizes": "Cup Size",
+          "addIns": "Add-Ins",
+          "creamers": "Creamer",
+          "sweetenerOptions": "Sweetener",
+          "flavorOptions": "Flavor",
+          "flavors": "Flavor",
+          "sizes": "Size",
+          "toppings": "Toppings",
+        };
+
+        final fields = categoryFields[widget.product.category?.toLowerCase()] ?? [];
+
+        List<Widget> dynamicFields = [];
+
+        for (var field in fields) {
+          final key = field["key"]!;
+          final type = field["type"]!;
+          final title = fieldTitles[key] ?? key;
+
+          if (!options.containsKey(key)) continue;
+
+          if (type == "dropdown") {
+            dynamicFields.add(
+              DropDownSection(
+                onChanged: (value) {
+                  setState(() {
+                    selectedValues[key] = value;
+                  });
+                },
+                title: title,
+                items: List<String>.from(options[key]),
+                hint: "Choose $title",
+              ),
+            );
+          } else if (type == "quantity") {
+            dynamicFields.add(
+              QuantitySection(
+                itemName: List<String>.from(options[key]).first,
+                title: title,
+                onChanged: (value) {
+                  setState(() {
+                    quantities[key] = value;
+                  });
+                },
+              ),
+            );
+          }
+        }
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Customize Your ${widget.product.name}",
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 20),
+            ...dynamicFields,
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                CustomButton(
+                  title: "Add to Cart",
+                  onTap: () async {
+                    String userId;
+                    if (FirebaseAuth.instance.currentUser != null) {
+                      userId = FirebaseAuth.instance.currentUser!.uid;
+                    } else {
+                      userId = "guest_${DateTime.now().millisecondsSinceEpoch}";
+                    }
+
+                    await FirebaseFirestore.instance.collection("orders").add({
+                      "userId": userId,
+                      "productId": widget.product.id,
+                      "productName": widget.product.name,
+                      "category": widget.product.category,
+                      "price": widget.product.price,
+                      ...selectedValues,
+                      ...quantities,
+                    });
+
+                    if (kDebugMode) {
+                      print("Order added to cart successfully!");
+                    }
+                    Navigator.of(context).pushNamed("/cart");
+                  },
+                ),
+                const Spacer(),
+                CustomButton(
+                  title: "Customize",
+                  onTap: () {
+                    Navigator.of(context).pushNamed('/customize', arguments: widget.product);
+                  },
+                  buttonColor: AppColors.freshMintColor,
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+          ],
+        );
+      },
     );
   }
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../../core/widget/quantity_container.dart';
 
 class CartItemCard extends StatelessWidget {
@@ -14,6 +13,31 @@ class CartItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final category = (order["category"] ?? "").toLowerCase();
+    final quantity = order["quantity"] ?? 1;
+    final price = order["price"] ?? 0;
+    List<String> lines = [];
+
+    if (category == "coffee") {
+      lines.add(
+          "${order["cupSizes"] ?? ""}, ${order["sweetenerOptions"] ?? 0} Splenda");
+      lines.add("${order["flavorOptions"] ?? 0} Pump (s) Pumpkin spice");
+      if (order["espressoShots"] != null) {
+        lines.add("${order["espressoShots"]} Shot(s) Espresso");
+      }
+      if (order["toppings"] != null) {
+        lines.add("${order["toppings"]} Toppings");
+      }
+      lines.add(order["creamers"] ?? "");
+      lines.add(order["addIns"] ?? "");
+    } else if (category == "cookie") {
+      lines.add(order["flavors"] ?? "");
+      lines.add(order["sizes"] ?? "");
+      lines.add(order["toppings"] ?? "");
+    } else {
+      lines.add(order["productName"] ?? "Item");
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -29,35 +53,32 @@ class CartItemCard extends StatelessWidget {
             ),
             const Spacer(),
             Text(
-              "\$${order["price"] ?? 0}",
+              "\$$price",
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
           ],
         ),
         const SizedBox(height: 20),
         Text(
-          "${order["cupSize"]}\n"
-          "${order["flavorQty"]} Splenda\n"
-          "${order["sweetenerQty"]} Pump(s) Pumpkin spice\n"
-          "${order["creamer"]}\n"
-          "${order["addIns"]}",
+          lines.join("\n"),
           style: const TextStyle(fontFamily: "Poppins"),
         ),
         const SizedBox(height: 20),
         Row(
           children: [
             QuantityContainer(
-              initialQuantity: order["quantity"] ?? 1,
+              initialQuantity: quantity,
               onChanged: onQtyChanged,
             ),
             const Spacer(),
             Text(
-              "\$${((order["quantity"]??1) * (order["price"] ?? 0)).toStringAsFixed(2)}",
+              "\$${(quantity * price).toStringAsFixed(2)}",
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
           ],
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 10),
+        Divider()
       ],
     );
   }

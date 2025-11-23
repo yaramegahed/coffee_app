@@ -8,6 +8,7 @@ class DropDownSection extends StatefulWidget {
   final List<String> items;
   final String hint;
   final ValueChanged<String?>? onChanged;
+  final String? initialValue;
 
   const DropDownSection({
     super.key,
@@ -15,6 +16,7 @@ class DropDownSection extends StatefulWidget {
     required this.items,
     required this.hint,
     this.onChanged,
+    this.initialValue,
   });
 
   @override
@@ -23,6 +25,12 @@ class DropDownSection extends StatefulWidget {
 
 class _DropDownSectionState extends State<DropDownSection> {
   String? selectedValue;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedValue = widget.initialValue;
+  }
 
   @override
   Widget build(BuildContext context) {
