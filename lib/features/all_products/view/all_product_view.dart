@@ -13,7 +13,7 @@ class AllProductView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
-      appBar: CustomAppBar(),
+      appBar: CustomAppBar(showBackIcon: true,),
       body: AllProductBody(products: products,),
     );
   }

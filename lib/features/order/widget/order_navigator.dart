@@ -14,21 +14,33 @@ class OrderNavigator extends StatelessWidget {
     return Navigator(
       initialRoute: '/order',
       onGenerateRoute: (settings) {
-        final product = settings.arguments as Product?;
         Widget page;
+
         switch (settings.name) {
           case '/order':
             page = const OrderView();
             break;
+
           case '/details':
-            page =  ProductDetailsView(product: product!,);
+            final product = settings.arguments as Product?;
+            page = ProductDetailsView(product: product!);
             break;
+
           case '/customize':
-            page =  CustomizeView(product: product!,);
+            if (settings.arguments is Map<String, dynamic>) {
+              final args = settings.arguments as Map<String, dynamic>;
+              final product = args["product"] as Product;
+              final orderId = args["orderId"] as String;
+              page = CustomizeView(product: product, orderId: orderId);
+            } else {
+              page = const OrderView(); // fallback
+            }
             break;
-            case '/cart':
-            page =  CartView();
+
+          case '/cart':
+            page = CartView();
             break;
+
           default:
             page = const OrderView();
         }

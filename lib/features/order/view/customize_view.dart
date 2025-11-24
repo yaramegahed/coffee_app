@@ -7,10 +7,12 @@ import '../widget/customize_view_body.dart';
 
 class CustomizeView extends StatelessWidget {
   final Product product;
+  final String orderId;
 
   const CustomizeView({
     super.key,
     required this.product,
+    required this.orderId,
   });
 
   @override
@@ -18,6 +20,9 @@ class CustomizeView extends StatelessWidget {
     return Scaffold(
         backgroundColor: AppColors.primaryColor,
         appBar: const CustomAppBar(),
-        body: CustomizeViewBody(product: product));
+        body: CustomizeViewBody(
+          product: product,
+          orderId: orderId,
+        ));
   }
 }

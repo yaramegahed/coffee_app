@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../features/auth/cubit/auth_cubit.dart';
@@ -55,8 +54,14 @@ Future<Map<String, dynamic>> getOptions(String category) async {
       .collection("productOptions")
       .doc(category)
       .get();
-  if (kDebugMode) {
-    print("dataaaaaaaaaa:${doc.data()}");
-  }
+  return doc.data() ?? {};
+}
+
+Future<Map<String, dynamic>> getCustomizeOptions(String category) async {
+  final doc = await FirebaseFirestore.instance
+      .collection('customizeOptions')
+      .doc(category)
+      .get();
+
   return doc.data() ?? {};
 }

@@ -1,7 +1,9 @@
 import 'package:coffee_app/core/bloc_observer/simple_bloc_observer.dart';
 import 'package:coffee_app/core/cubit/products_cubit.dart';
 import 'package:coffee_app/features/auth/cubit/auth_cubit.dart';
+import 'package:coffee_app/features/cart/cubit/order_cubit.dart';
 import 'package:coffee_app/features/splash/view/splash_view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,12 +27,14 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) =>
-          ProductsCubit()
-            ..getProducts(),
+          create: (context) => ProductsCubit()..getProducts(),
         ),
         BlocProvider(
           create: (context) => AuthCubit(),
+        ),
+        BlocProvider(
+          create: (context) => OrdersCubit()
+            ..listenOrdersCount(FirebaseAuth.instance.currentUser?.uid ?? ""),
         ),
       ],
       child: MaterialApp(

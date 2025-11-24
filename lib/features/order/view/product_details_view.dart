@@ -13,7 +13,7 @@ class ProductDetailsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
-      appBar: CustomAppBar(),
+      appBar: CustomAppBar(showBackIcon: true,),
       body: ProductDetailsBody(
         itemImage: product.imageUrl,
         itemName: product.name ?? "drink",

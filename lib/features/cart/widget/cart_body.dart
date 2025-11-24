@@ -1,3 +1,4 @@
+import 'package:coffee_app/core/constants/app_colors.dart';
 import 'package:coffee_app/features/cart/cubit/order_cubit.dart';
 import 'package:coffee_app/features/cart/widget/empty_cart.dart';
 import 'package:coffee_app/features/home/widget/custom_button.dart';
@@ -30,7 +31,10 @@ class _CartBodyState extends State<CartBody> {
       child: BlocBuilder<OrdersCubit, OrdersState>(
         builder: (context, state) {
           if (state is OrdersLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(
+                child: CircularProgressIndicator(
+              color: AppColors.brownButtonColor,
+            ));
           }
 
           if (state is OrdersSuccess) {
@@ -45,7 +49,8 @@ class _CartBodyState extends State<CartBody> {
                     child: ListView.builder(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 20),
                       itemCount: orders.length,
                       itemBuilder: (_, i) {
                         final order = orders[i];
@@ -57,7 +62,9 @@ class _CartBodyState extends State<CartBody> {
                             children: [
                               SlidableAction(
                                 onPressed: (_) {
-                                  context.read<OrdersCubit>().removeOrder(order["id"],);
+                                  context.read<OrdersCubit>().removeOrder(
+                                        order["id"],
+                                      );
                                 },
                                 backgroundColor: Colors.red,
                                 foregroundColor: Colors.white,
@@ -69,7 +76,9 @@ class _CartBodyState extends State<CartBody> {
                           child: CartItemCard(
                             order: order,
                             onQtyChanged: (qty) {
-                              context.read<OrdersCubit>().updateQuantity(order["id"], qty);
+                              context
+                                  .read<OrdersCubit>()
+                                  .updateQuantity(order["id"], qty);
                             },
                           ),
                         );

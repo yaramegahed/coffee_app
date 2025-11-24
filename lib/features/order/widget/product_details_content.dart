@@ -32,7 +32,10 @@ class _ProductDetailsContentState extends State<ProductDetailsContent> {
           return Center(child: Text("Failed to load options"));
         }
         if (!snapshot.hasData) {
-          return Center(child: CircularProgressIndicator());
+          return Center(
+              child: CircularProgressIndicator(
+            color: AppColors.brownButtonColor,
+          ));
         }
 
         final options = snapshot.data as Map<String, dynamic>;
@@ -63,7 +66,8 @@ class _ProductDetailsContentState extends State<ProductDetailsContent> {
           "toppings": "Toppings",
         };
 
-        final fields = categoryFields[widget.product.category?.toLowerCase()] ?? [];
+        final fields =
+            categoryFields[widget.product.category?.toLowerCase()] ?? [];
 
         List<Widget> dynamicFields = [];
 
@@ -101,7 +105,6 @@ class _ProductDetailsContentState extends State<ProductDetailsContent> {
             );
           }
         }
-
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -115,7 +118,6 @@ class _ProductDetailsContentState extends State<ProductDetailsContent> {
             ),
             const SizedBox(height: 20),
             ...dynamicFields,
-            const SizedBox(height: 20),
             Row(
               children: [
                 CustomButton(
@@ -127,8 +129,9 @@ class _ProductDetailsContentState extends State<ProductDetailsContent> {
                     } else {
                       userId = "guest_${DateTime.now().millisecondsSinceEpoch}";
                     }
-
-                    await FirebaseFirestore.instance.collection("orders").add({
+                    final orderRef = await FirebaseFirestore.instance
+                        .collection("orders")
+                        .add({
                       "userId": userId,
                       "productId": widget.product.id,
                       "productName": widget.product.name,
@@ -137,18 +140,41 @@ class _ProductDetailsContentState extends State<ProductDetailsContent> {
                       ...selectedValues,
                       ...quantities,
                     });
-
                     if (kDebugMode) {
                       print("Order added to cart successfully!");
                     }
-                    Navigator.of(context).pushNamed("/cart");
+                    if (context.mounted) {
+                      Navigator.of(context).pushNamed("/cart");
+                    }
                   },
                 ),
                 const Spacer(),
                 CustomButton(
                   title: "Customize",
-                  onTap: () {
-                    Navigator.of(context).pushNamed('/customize', arguments: widget.product);
+                  onTap: () async {
+                    String userId = FirebaseAuth.instance.currentUser?.uid ??
+                        "guest_${DateTime.now().millisecondsSinceEpoch}";
+
+                    final orderRef = await FirebaseFirestore.instance
+                        .collection("orders")
+                        .add({
+                      "userId": userId,
+                      "productId": widget.product.id,
+                      "productName": widget.product.name,
+                      "category": widget.product.category,
+                      "price": widget.product.price,
+                      ...selectedValues,
+                      ...quantities,
+                      "createdAt": FieldValue.serverTimestamp(),
+                    });
+
+                    final orderId = orderRef.id;
+                    if (context.mounted) {
+                      Navigator.of(context).pushNamed('/customize', arguments: {
+                        'product': widget.product,
+                        'orderId': orderId,
+                      });
+                    }
                   },
                   buttonColor: AppColors.freshMintColor,
                 ),

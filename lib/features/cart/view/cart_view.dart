@@ -17,7 +17,7 @@ class CartView extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
-      appBar: CustomAppBar(),
+      appBar: CustomAppBar(showBackIcon: true,),
       body:CartBody(userId: userId,),
     );
   }

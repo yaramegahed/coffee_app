@@ -18,26 +18,38 @@ class CartItemCard extends StatelessWidget {
     final price = order["price"] ?? 0;
     List<String> lines = [];
 
-    if (category == "coffee") {
-      lines.add(
-          "${order["cupSizes"] ?? ""}, ${order["sweetenerOptions"] ?? 0} Splenda");
-      lines.add("${order["flavorOptions"] ?? 0} Pump (s) Pumpkin spice");
-      if (order["espressoShots"] != null) {
-        lines.add("${order["espressoShots"]} Shot(s) Espresso");
+    if ((order["customized"] ?? false) && category == "coffee") {
+      if (order["cupSizes"] != null) {
+        lines.add("${order["cupSizes"]}");
+      }
+      if (order["sweetenerOptions"] != null) {
+        lines.add("${order["sweetenerOptions"]} Splenda");
+      }
+      if (order["flavorOptions"] != null) {
+        lines.add("${order["flavorOptions"]} Pump(s) Pumpkin spice");
+      }
+      if (order["shotOptions "] != null) {
+        lines.add("${order["shotOptions "]} (s) Espresso");
+      }
+      if (order["espressoOptions "] != null) {
+        lines.add("${order["espressoOptions "]} ");
       }
       if (order["toppings"] != null) {
         lines.add("${order["toppings"]} Toppings");
       }
-      lines.add(order["creamers"] ?? "");
-      lines.add(order["addIns"] ?? "");
+      if (order["creamers"] != null) {
+        lines.add(order["creamers"]);
+      }
+      if (order["addIns"] != null) {
+        lines.add(order["addIns"]);
+      }
     } else if (category == "cookie") {
-      lines.add(order["flavors"] ?? "");
-      lines.add(order["sizes"] ?? "");
-      lines.add(order["toppings"] ?? "");
+      if (order["flavors"] != null) lines.add(order["flavors"]);
+      if (order["sizes"] != null) lines.add(order["sizes"]);
+      if (order["toppings"] != null) lines.add(order["toppings"]);
     } else {
       lines.add(order["productName"] ?? "Item");
     }
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

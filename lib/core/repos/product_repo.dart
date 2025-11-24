@@ -8,15 +8,10 @@ class ProductRepo {
   final ApiServices apiServices = ApiServices();
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  /// جلب المنتجات من API وإضافة السعر على Firestore
   Future<List<Product>> getProducts({required String category}) async {
     try {
       // 1️⃣ جلب البيانات من API
       final data = await apiServices.get(endPoint: "/products?category=$category");
-
-      if (kDebugMode) {
-        print("API Data: $data");
-      }
 
       // 2️⃣ تحويل البيانات لنماذج Product
       final productsModel = ProductsModel.fromJson(data);
