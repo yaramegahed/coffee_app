@@ -43,7 +43,33 @@ class CartItemCard extends StatelessWidget {
       if (order["addIns"] != null) {
         lines.add(order["addIns"]);
       }
-    } else if (category == "cookie") {
+    } else if(category == "coffee"){
+      if (order["cupSizes"] != null) {
+        lines.add("${order["cupSizes"]}");
+      }
+      if (order["sweetenerOptions"] != null) {
+        lines.add("${order["sweetenerOptions"]} Splenda");
+      }
+      if (order["flavorOptions"] != null) {
+        lines.add("${order["flavorOptions"]} Pump(s) Pumpkin spice");
+      }
+      if (order["shotOptions "] != null) {
+        lines.add("${order["shotOptions "]} (s) Espresso");
+      }
+      if (order["espressoOptions "] != null) {
+        lines.add("${order["espressoOptions "]} ");
+      }
+      if (order["toppings"] != null) {
+        lines.add("${order["toppings"]} Toppings");
+      }
+      if (order["creamers"] != null) {
+        lines.add(order["creamers"]);
+      }
+      if (order["addIns"] != null) {
+        lines.add(order["addIns"]);
+      }
+    }
+    else if (category == "cookie") {
       if (order["flavors"] != null) lines.add(order["flavors"]);
       if (order["sizes"] != null) lines.add(order["sizes"]);
       if (order["toppings"] != null) lines.add(order["toppings"]);
