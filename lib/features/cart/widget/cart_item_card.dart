@@ -70,11 +70,12 @@ class CartItemCard extends StatelessWidget {
       }
     }
     else if (category == "cookie") {
-      if (order["flavors"] != null) lines.add(order["flavors"]);
+      if (order["flavors"] != null) lines.add(order["flavors"]??"No details available");
       if (order["sizes"] != null) lines.add(order["sizes"]);
       if (order["toppings"] != null) lines.add(order["toppings"]);
     } else {
       lines.add(order["productName"] ?? "Item");
+      Text("No details available");
     }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

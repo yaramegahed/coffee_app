@@ -93,7 +93,9 @@ class _CartBodyState extends State<CartBody> {
                     padding: const EdgeInsets.all(10.0),
                     child: CustomButton(
                       title: "CheckOut",
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).pushNamed("/checkout");
+                      },
                       width: double.infinity,
                     ),
                   ),

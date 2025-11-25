@@ -1,4 +1,5 @@
 import 'package:coffee_app/features/cart/view/cart_view.dart';
+import 'package:coffee_app/features/checkout/view/checkout_view.dart';
 import 'package:coffee_app/features/order/view/customize_view.dart';
 import 'package:coffee_app/features/order/view/order_view.dart';
 import 'package:coffee_app/features/order/view/product_details_view.dart';
@@ -39,6 +40,9 @@ class OrderNavigator extends StatelessWidget {
 
           case '/cart':
             page = CartView();
+            break;
+          case '/checkout':
+            page = CheckoutView();
             break;
 
           default:
