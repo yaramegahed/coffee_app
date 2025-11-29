@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'cart_container_child.dart';
+import 'checkout_container_child.dart';
 
 class CheckoutBody extends StatelessWidget {
   const CheckoutBody({super.key});
@@ -19,7 +19,7 @@ class CheckoutBody extends StatelessWidget {
               color: Colors.white,
               borderRadius: BorderRadius.circular(12),
             ),
-            child: CartContainerChild(),
+            child: CheckoutContainerChild(),
           )
         ],
       ),

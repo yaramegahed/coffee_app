@@ -3,8 +3,8 @@ import '../../../core/constants/app_colors.dart';
 import '../../home/widget/custom_button.dart';
 import 'checkout_inner_container.dart';
 
-class CartContainerChild extends StatelessWidget {
-  const CartContainerChild({
+class CheckoutContainerChild extends StatelessWidget {
+  const CheckoutContainerChild({
     super.key,
   });
 

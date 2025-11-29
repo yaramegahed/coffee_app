@@ -8,11 +8,14 @@ import 'package:flutter/material.dart';
 import '../../../core/models/products_model.dart';
 
 class OrderNavigator extends StatelessWidget {
-  const OrderNavigator({super.key});
+  final GlobalKey<NavigatorState>? navigatorKey;
+
+  const OrderNavigator({super.key, this.navigatorKey});
 
   @override
   Widget build(BuildContext context) {
     return Navigator(
+      key: navigatorKey,
       initialRoute: '/order',
       onGenerateRoute: (settings) {
         Widget page;
@@ -34,7 +37,7 @@ class OrderNavigator extends StatelessWidget {
               final orderId = args["orderId"] as String;
               page = CustomizeView(product: product, orderId: orderId);
             } else {
-              page = const OrderView(); // fallback
+              page = const OrderView();
             }
             break;
 

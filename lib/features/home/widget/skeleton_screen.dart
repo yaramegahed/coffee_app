@@ -4,7 +4,10 @@ import 'package:shimmer/shimmer.dart';
 class SkeletonScreen extends StatelessWidget {
   const SkeletonScreen({super.key});
 
-  Widget _buildShimmer({double height = 20, double width = double.infinity, BorderRadius? radius}) {
+  Widget _buildShimmer(
+      {double height = 20,
+      double width = double.infinity,
+      BorderRadius? radius}) {
     return Shimmer.fromColors(
       baseColor: Colors.grey.shade300,
       highlightColor: Colors.grey.shade100,
@@ -27,7 +30,10 @@ class SkeletonScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Header
-          _buildShimmer(height: 180, width: double.infinity, radius: BorderRadius.circular(12)),
+          _buildShimmer(
+              height: 180,
+              width: double.infinity,
+              radius: BorderRadius.circular(12)),
           const SizedBox(height: 16),
           // Small text line
           _buildShimmer(width: 150, height: 20),
@@ -41,7 +47,8 @@ class SkeletonScreen extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemCount: 6,
               separatorBuilder: (_, __) => const SizedBox(width: 10),
-              itemBuilder: (_, __) => _buildShimmer(height: 220, width: 140, radius: BorderRadius.circular(12)),
+              itemBuilder: (_, __) => _buildShimmer(
+                  height: 220, width: 140, radius: BorderRadius.circular(12)),
             ),
           ),
           const SizedBox(height: 16),
@@ -49,7 +56,12 @@ class SkeletonScreen extends StatelessWidget {
           Wrap(
             spacing: 10,
             runSpacing: 10,
-            children: List.generate(4, (index) => _buildShimmer(height: 120, width: (MediaQuery.of(context).size.width - 52) / 2, radius: BorderRadius.circular(12))),
+            children: List.generate(
+                4,
+                (index) => _buildShimmer(
+                    height: 120,
+                    width: (MediaQuery.of(context).size.width - 52) / 2,
+                    radius: BorderRadius.circular(12))),
           ),
         ],
       ),

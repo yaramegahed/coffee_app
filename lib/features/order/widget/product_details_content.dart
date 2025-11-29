@@ -20,6 +20,7 @@ class ProductDetailsContent extends StatefulWidget {
 }
 
 class _ProductDetailsContentState extends State<ProductDetailsContent> {
+  final GlobalKey<NavigatorState> orderNavKey = GlobalKey<NavigatorState>();
   final Map<String, dynamic> selectedValues = {};
   final Map<String, int> quantities = {};
 
@@ -144,7 +145,15 @@ class _ProductDetailsContentState extends State<ProductDetailsContent> {
                       print("Order added to cart successfully!");
                     }
                     if (context.mounted) {
-                      Navigator.of(context).pushNamed("/cart");
+                      buildShowGeneralDialog(
+                        context,
+                        () {
+                          Navigator.pop(context);
+                          Navigator.of(context, rootNavigator: true).pop();
+                          orderNavKey.currentState
+                              ?.popUntil((route) => route.isFirst);
+                        },
+                      );
                     }
                   },
                 ),

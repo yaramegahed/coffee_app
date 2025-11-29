@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/constants/app_colors.dart';
@@ -21,24 +22,28 @@ class ProductDetailsContainer extends StatelessWidget {
         color: AppColors.freshMintColor,
       ),
       child: Center(
-          child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ClipRRect(
-            child: Image.network(
-              itemImage,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CachedNetworkImage(
+              imageUrl: itemImage,
             ),
-          ),
-          SizedBox(
-            width: 20,
-          ),
-          Text(
-            itemName,
-            style: TextStyle(
-                color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-        ],
-      )),
+            SizedBox(
+              width: 20,
+            ),
+            Text(
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              softWrap: true,
+              itemName,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

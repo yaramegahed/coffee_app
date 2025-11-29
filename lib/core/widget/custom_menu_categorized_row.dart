@@ -29,7 +29,7 @@ class CustomMenuCategorizedRow extends StatelessWidget {
           TextButton(
               onPressed: onPressed,
               child: Text(
-                "See all",
+                "see all",
                 style: TextStyle(color: AppColors.freshMintColor, fontSize: 20),
               ))
         ],

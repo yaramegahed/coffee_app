@@ -15,7 +15,7 @@ class CustomSwitchRow extends StatefulWidget {
 }
 
 class _CustomSwitchRowState extends State<CustomSwitchRow> {
-  bool switchValue = true;
+  bool switchValue = false;
 
   @override
   Widget build(BuildContext context) {

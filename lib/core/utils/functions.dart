@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:coffee_app/features/order/widget/order_navigator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -64,4 +65,88 @@ Future<Map<String, dynamic>> getCustomizeOptions(String category) async {
       .get();
 
   return doc.data() ?? {};
+}
+
+Future<Object?> buildShowGeneralDialog(
+    BuildContext context, void Function()? onPressed) {
+  return showGeneralDialog(
+    context: context,
+    barrierDismissible: true,
+    barrierLabel: '',
+    transitionDuration: Duration(milliseconds: 250),
+    pageBuilder: (context, animation1, animation2) {
+      return GestureDetector(
+        onTap: () => Navigator.pop(context),
+        child: Material(
+          color: Colors.black.withOpacity(0.3),
+          child: Center(
+            child: GestureDetector(
+              onTap: () {},
+              child: Container(
+                width: 350,
+                padding: EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      width: 60,
+                      height: 60,
+                      decoration: BoxDecoration(
+                        border:
+                            Border.all(color: AppColors.greenColor, width: 2),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        Icons.check,
+                        color: AppColors.greenColor,
+                        size: 40,
+                      ),
+                    ),
+                    SizedBox(height: 15),
+                    Text(
+                      "Added to cart successfully!",
+                      style: TextStyle(fontSize: 16),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 20),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: OutlinedButton(
+                            onPressed: onPressed,
+                            child: Text(
+                              "Continue",
+                              style: TextStyle(color: AppColors.greenColor),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                              Navigator.of(context).pushNamed("/cart");
+                            },
+                            child: Text(
+                              "Cart",
+                              style:
+                                  TextStyle(color: AppColors.brownButtonColor),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    },
+  );
 }
