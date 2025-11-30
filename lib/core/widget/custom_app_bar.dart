@@ -18,6 +18,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<OrdersCubit, OrdersState>(
       builder: (context, state) {
+        int count = 0;
+        if (state is OrdersCountSuccess) {
+          count = state.count;
+        }
         return AppBar(
           centerTitle: true,
           title: Image.asset(
@@ -55,32 +59,31 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   SizedBox(
                     width: 20,
                   ),
-                  if (state is OrdersCountSuccess && state.count >= 0)
-                    Positioned(
-                      top: 0,
-                      right: -8,
-                      child: Container(
-                        alignment: Alignment.center,
-                        height: 20,
-                        width: 20,
-                        padding: const EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
-                          color: AppColors.freshMintColor,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Center(
-                          child: Text(
-                            textAlign: TextAlign.center,
-                            state.count.toString(),
-                            style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 8,
-                                fontWeight: FontWeight.bold),
-                          ),
+                  Positioned(
+                    top: 0,
+                    right: -8,
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 20,
+                      width: 20,
+                      padding: const EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black),
+                        color: AppColors.freshMintColor,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Center(
+                        child: Text(
+                          textAlign: TextAlign.center,
+                          count.toString(),
+                          style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 8,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),
+                  ),
                 ])),
           ],
         );

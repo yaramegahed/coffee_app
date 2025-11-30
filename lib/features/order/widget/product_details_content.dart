@@ -145,15 +145,17 @@ class _ProductDetailsContentState extends State<ProductDetailsContent> {
                       print("Order added to cart successfully!");
                     }
                     if (context.mounted) {
-                      buildShowGeneralDialog(
-                        context,
-                        () {
-                          Navigator.pop(context);
-                          Navigator.of(context, rootNavigator: true).pop();
-                          orderNavKey.currentState
-                              ?.popUntil((route) => route.isFirst);
-                        },
-                      );
+                      buildShowGeneralDialog(context, onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.of(context, rootNavigator: true).pop();
+                        orderNavKey.currentState
+                            ?.popUntil((route) => route.isFirst);
+                      }, cartOnPressed: () {
+                        Navigator.pop(context);
+                        Navigator.of(context, rootNavigator: true).pop();
+                        Navigator.of(context, rootNavigator: false)
+                            .pushNamed("/cart");
+                      });
                     }
                   },
                 ),

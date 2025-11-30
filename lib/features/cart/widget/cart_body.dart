@@ -1,7 +1,9 @@
 import 'package:coffee_app/core/constants/app_colors.dart';
 import 'package:coffee_app/features/cart/cubit/order_cubit.dart';
 import 'package:coffee_app/features/cart/widget/empty_cart.dart';
+import 'package:coffee_app/features/checkout/view/checkout_view.dart';
 import 'package:coffee_app/features/home/widget/custom_button.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -94,7 +96,11 @@ class _CartBodyState extends State<CartBody> {
                     child: CustomButton(
                       title: "CheckOut",
                       onTap: () {
-                        Navigator.of(context).pushNamed("/checkout");
+                        Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => CheckoutView(),
+                            ));
                       },
                       width: double.infinity,
                     ),

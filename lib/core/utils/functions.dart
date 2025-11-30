@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:coffee_app/features/order/widget/order_navigator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -68,7 +67,7 @@ Future<Map<String, dynamic>> getCustomizeOptions(String category) async {
 }
 
 Future<Object?> buildShowGeneralDialog(
-    BuildContext context, void Function()? onPressed) {
+    BuildContext context, {void Function()? onPressed, cartOnPressed}) {
   return showGeneralDialog(
     context: context,
     barrierDismissible: true,
@@ -127,10 +126,7 @@ Future<Object?> buildShowGeneralDialog(
                         SizedBox(width: 10),
                         Expanded(
                           child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                              Navigator.of(context).pushNamed("/cart");
-                            },
+                            onPressed: cartOnPressed,
                             child: Text(
                               "Cart",
                               style:

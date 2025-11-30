@@ -8,9 +8,9 @@ class CheckoutView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: AppColors.primaryColor,
-      appBar: CustomAppBar(),
+      appBar: const CustomAppBar(),
       body: CheckoutBody(),
     );
   }

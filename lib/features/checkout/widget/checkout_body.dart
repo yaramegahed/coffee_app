@@ -13,7 +13,6 @@ class CheckoutBody extends StatelessWidget {
         children: [
           Container(
             padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-            height: 500,
             width: double.infinity,
             decoration: BoxDecoration(
               color: Colors.white,

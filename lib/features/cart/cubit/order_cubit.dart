@@ -80,6 +80,19 @@ class OrdersCubit extends Cubit<OrdersState> {
     }
   }
 
+  Future<void> clearOrders() async {
+    emit(OrdersSuccess(orders: []));
+  }
+
+  Future<void> clearOrdersBackend(String userId) async {
+    final snapshots =
+        await _ordersCollection.where('userId', isEqualTo: userId).get();
+
+    for (var doc in snapshots.docs) {
+      await doc.reference.delete();
+    }
+  }
+
   void listenOrdersCount(String userId) {
     _ordersCollection
         .where('userId', isEqualTo: userId)
