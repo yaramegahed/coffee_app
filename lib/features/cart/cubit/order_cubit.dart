@@ -93,12 +93,18 @@ class OrdersCubit extends Cubit<OrdersState> {
     }
   }
 
-  void listenOrdersCount(String userId) {
+  void listenOrders(String userId) {
     _ordersCollection
         .where('userId', isEqualTo: userId)
         .snapshots()
         .listen((snapshot) {
-      emit(OrdersCountSuccess(count: snapshot.docs.length));
+      final orders = snapshot.docs.map((doc) {
+        final data = doc.data();
+        data['id'] = doc.id;
+        return data;
+      }).toList();
+
+      emit(OrdersSuccess(orders: orders)); // orders + count معًا
     });
   }
 }

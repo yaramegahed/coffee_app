@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => OrdersCubit()
-            ..listenOrdersCount(FirebaseAuth.instance.currentUser?.uid ?? ""),
+            ..listenOrders(FirebaseAuth.instance.currentUser?.uid ?? ""),
         ),
       ],
       child: MaterialApp(

@@ -19,9 +19,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return BlocBuilder<OrdersCubit, OrdersState>(
       builder: (context, state) {
         int count = 0;
-        if (state is OrdersCountSuccess) {
-          count = state.count;
-        }
+        if (state is OrdersSuccess) count = state.count;
+
         return AppBar(
           centerTitle: true,
           title: Image.asset(
