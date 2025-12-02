@@ -1,3 +1,4 @@
+import 'package:coffee_app/core/utils/local_storage_service.dart';
 import 'package:coffee_app/features/home/widget/custom_button.dart';
 import 'package:flutter/material.dart';
 
@@ -37,13 +38,15 @@ class PageControlRow extends StatelessWidget {
           const Spacer(),
           CustomButton(
             title: isLastPage ? "Start" : "Next",
-            onTap: () {
+            onTap: () async {
               if (!isLastPage) {
                 pageController.nextPage(
                   duration: const Duration(milliseconds: 500),
                   curve: Curves.ease,
                 );
               } else {
+                await LocalStorageService.setSeenOnboarding();
+                if (!context.mounted) return;
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => const LoginView()),

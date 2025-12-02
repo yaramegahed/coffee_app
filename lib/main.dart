@@ -1,5 +1,6 @@
 import 'package:coffee_app/core/bloc_observer/simple_bloc_observer.dart';
 import 'package:coffee_app/core/cubit/products_cubit.dart';
+import 'package:coffee_app/core/utils/local_storage_service.dart';
 import 'package:coffee_app/features/auth/cubit/auth_cubit.dart';
 import 'package:coffee_app/features/cart/cubit/order_cubit.dart';
 import 'package:coffee_app/features/splash/view/splash_view.dart';
@@ -16,6 +17,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   Bloc.observer = SimpleBlocObserver();
+  await LocalStorageService.init();
   runApp(const MyApp());
 }
 
